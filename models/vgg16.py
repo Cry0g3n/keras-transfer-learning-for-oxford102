@@ -23,7 +23,7 @@ def get_layer_weights(weights_file=None, layer_name=None):
     else:
         g = weights_file[layer_name]
         weights = [g[p] for p in g]
-        print 'Weights for "{}" are loaded'.format(layer_name)
+        print('Weights for "{}" are loaded'.format(layer_name))
         return weights
 
 
@@ -143,7 +143,8 @@ def train_top_model(class_weight=None):
         nb_epoch=top_model_nb_epoch,
         validation_data=(validation_data, validation_labels),
         callbacks=callbacks_list,
-        class_weight=class_weight)
+        class_weight=class_weight,
+        verbose=2)
 
     util.save_history(history=history, prefix='bottleneck')
 
@@ -203,7 +204,8 @@ def tune(lr=0.0001, class_weight=None):
         validation_data=validation_generator,
         nb_val_samples=config.nb_validation_samples,
         callbacks=[early_stopping, model_checkpoint],
-        class_weight=class_weight)
+        class_weight=class_weight,
+        verbose=2)
 
     util.save_history(history=history, prefix='fine-tuning')
     util.save_classes(config.classes)
